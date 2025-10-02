@@ -1,27 +1,83 @@
 const express = require("express");
 const app = express();
 
-app.get("/health-checkup", function(req, res) {
-    // do health checks here
-
-    const kidneyId = req.query.kidneyId;
+function userMiddleware(req, res, next) {
     const username = req.headers.username;
     const password = req.headers.password;
-
     if (username != "harkirat" && password != "pass") {
         res.status(403).json({
-            msg: "User doesn't exist" 
-        });
-        return; 
+            msg: "Incorrect input"});
+    } else {
+        next();
     }
+};
 
-    if (kidneyId != 1 && kidneyId != 2) {
-      res.status(411).json({
-        msg: "wrong inputs" 
-      });
-      return;
+function kidneyMiddleware(req, res, next) {
+    const kidneyId = req.query.kidneyId;
+    if (kidneyId != "1" && kidneyId != "2") {
+        res.status(403).json({
+            msg: "Incorrect input"})
+    } else {
+        next();
     }
-      
+};
+
+app.get("/health-checkup", userMiddleware, kidneyMiddleware, function(req, res){
+    res.send("Your heart is healthy")
+});
+
+app.get("/kidney-check", userMiddleware, kidneyMiddleware, function(req, res) {
+    res.send("Your kidney is healthy")
 });
 
 app.listen(3000)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function validator(username, password, kidneyId) {
+//     if (username === "harkirat" && password === "pass") {
+//         if (kidneyId === "1" || kidneyId === "2") {
+//             return true;
+//         }
+//     }
+//     else {
+//         return false;
+//     }
+// }
+
+// const express = require("express");
+// const app = express();
+
+// app.get("/health-checkup", function(req, res) {
+//     // do health checks here
+
+//     const kidneyId = req.query.kidneyId;
+//     const username = req.headers.username;
+//     const password = req.headers.password;
+
+//     if (validator(username, password, kidneyId)) {
+//        res.json({msg: "You are good!"})
+//        return;
+//     }
+//     res.status(400).json({"msg": "Somethings up with your inputs"})
+//     return;
+// });
+
+// app.listen(3000)
+
