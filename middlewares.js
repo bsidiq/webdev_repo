@@ -1,36 +1,98 @@
 const express = require("express");
 const app = express();
 
-function userMiddleware(req, res, next) {
-    const username = req.headers.username;
-    const password = req.headers.password;
-    if (username != "harkirat" && password != "pass") {
-        res.status(403).json({
-            msg: "Incorrect input"});
-    } else {
-        next();
-    }
-};
+app.post("/health-checkup", function(req, res){
+    // do something with kidney here
+    const kidneys = req.body.kidneys;
+    const kidneyLength = kidneys.kidneyLength
 
-function kidneyMiddleware(req, res, next) {
-    const kidneyId = req.query.kidneyId;
-    if (kidneyId != "1" && kidneyId != "2") {
-        res.status(403).json({
-            msg: "Incorrect input"})
-    } else {
-        next();
-    }
-};
-
-app.get("/health-checkup", userMiddleware, kidneyMiddleware, function(req, res){
-    res.send("Your heart is healthy")
-});
-
-app.get("/kidney-check", userMiddleware, kidneyMiddleware, function(req, res) {
-    res.send("Your kidney is healthy")
+    res.send("Your kidney length is: " + kidneyLength)
 });
 
 app.listen(3000)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const express = require("express");
+// const app = express();
+// let numberOfRequests = 0;
+
+// function calculateRequests(req, res, next) {
+//     numberOfRequests++;
+//     console.log(numberOfRequests)
+//    next();
+// }
+
+// app.use(calculateRequests)
+// app.use(express.json())
+
+// function userMiddleware(req, res, next) {
+//     const username = req.headers.username;
+//     const password = req.headers.password;
+//     if (username != "harkirat" && password != "pass") {
+//         res.status(403).json({
+//             msg: "Incorrect input"});
+//     } else {
+//         next();
+//     }
+// };
+
+// function kidneyMiddleware(req, res, next) {
+//     const kidneyId = req.query.kidneyId;
+//     if (kidneyId != "1" && kidneyId != "2") {
+//         res.status(403).json({
+//             msg: "Incorrect input"})
+//     } else {
+//         next();
+//     }
+// };
+
+// app.get("/health-checkup", userMiddleware, kidneyMiddleware, function(req, res){
+//     console.log(req.body)
+//     res.send("Your heart is healthy")
+// });
+
+// app.get("/kidney-check", userMiddleware, kidneyMiddleware, function(req, res) {
+//     res.send("Your kidney is healthy")
+// });
+
+// app.listen(3000)
 
 
 
