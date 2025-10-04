@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="uft-8">
+    <meta name="viewport" content="width=device-width">
+    <title>replit</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <script>
+        // Another way of writing the getAnimalData() function: 
+        async function getAnimalData() {
+            const response = await fetch("https://fakerapi.it/api/v1/persons");
+            const finalData = await response.json()
+            document.getElementById("container").innerHTML = JSON.stringify(finalData.data);
+        }
+        // function getAnimalData() {
+        //     // fetch(): built-in browswer function that makes HTTP requests
+        //     // it sends a GET request to the URL https://fakerapi.it/api/v1/persons
+        //     // fetch() returns a Promise not the actual data yet (reading from the URL takes time)
+        //     // response: contains status code, headers, and the response body
+        //     const response = fetch("https://fakerapi.it/api/v1/persons")
+        //     // .then(fnc(res)): called on the Promise returned by fetch()
+        //     // when HTTP request completes then .then(fnc(res)) runs
+        //     // the parameter response is an object not a json file
+        //         .then(function(response){
+        //     // response.json(): is a method that reads the response body
+        //     // it returns another Promise (parsing takes time)
+        //             response.json()
+        //     // .then(fnc(finalData)): handles the Promise returned by response.json()
+        //              .then(function(finalData){
+        //                 console.log(finalData)
+        //              })
+        //         })
+        // }
+    </script>
+    <button onclick="getAnimalData()">Get animal data</button>
+</body>
+
+</html>
